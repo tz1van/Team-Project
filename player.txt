@@ -1,0 +1,76 @@
+Information about object: Player
+
+Sprite: Player_r
+Solid: false
+Visible: true
+Depth: 0
+Persistent: false
+Parent: <no parent>
+Mask: <same as sprite>
+
+Create Event:
+set variable jumpp to 0
+set variable sizee to 0
+set variable poss to 2
+
+Alarm Event for alarm 0:
+play sound lvlup; looping: false
+
+Alarm Event for alarm 1:
+for all Player: set variable sizee to 0
+set the sprite to Player_r with subimage -1 and speed 0.1
+set Alarm 2 to 40
+
+Alarm Event for alarm 2:
+set speed to 0 and direction to 180
+
+ Step Event:
+if relative position (0,1) is collision free for Only solid objects
+      set the gravity to 0.19 in direction 270
+else
+      set the gravity to 0 in direction 270
+if vspeed is larger than 12
+      set variable vspeed to 12
+if health is equal to 100
+      set the number of lives relative to 1
+      set the health to 0
+      set Alarm 0 to 40
+set variable jumpp relative to -1
+
+Collision Event with object block:
+move in direction direction at most 12 till a contact with solid objects
+set the vertical speed to 0
+
+Keyboard Event for <no key> Key:
+if sizee is not equal to -1
+      set variable image_speed to 0
+
+Keyboard Event for <Left> Key:
+if relative position (-4,0) is collision free for Only solid objects
+      jump relative to position (-2,0)
+      if sizee is equal to 0
+            set the sprite to player_l with subimage -1 and speed 0.1
+      else
+            set the sprite to sprite51 with subimage -1 and speed 0.2
+set variable poss to 1
+
+Keyboard Event for <Up> Key:
+if expression jumpp<=0 is true
+      if relative position (0,1) gives a collision with Only solid objects
+            if sizee is equal to 0
+                  set the vertical speed to -5
+            else
+                  set the vertical speed to -5.5
+      set variable jumpp to 8
+
+Keyboard Event for <Right> Key:
+if relative position (4,0) is collision free for Only solid objects
+      jump relative to position (2,0)
+      if sizee is equal to 0
+            set the sprite to Player_r with subimage -1 and speed 0.1
+      else
+            set the sprite to sprite49 with subimage -1 and speed 0.2
+set variable poss to 2
+
+Key Press Event for <Up> Key:
+play sound jump; looping: false
